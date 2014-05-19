@@ -44,4 +44,8 @@ RUN chkconfig iptables off
 # Expose port 22 for SSH
 EXPOSE 22
 
-CMD /usr/sbin/sshd -D
+# Build a file /etc/rc.local
+RUN echo "service salt-minion start" > /etc/rc.local
+RUN echo "/usr/sbin/sshd -D" >> /etc/rc.local
+
+CMD /etc/rc.local
