@@ -38,7 +38,7 @@ RUN rpm -Uvh http://ftp.linux.ncsu.edu/pub/epel/6/i386/epel-release-6-8.noarch.r
 RUN yum install -y salt-minion
 RUN chkconfig salt-minion on
 RUN [ ! -d /etc/salt/minion.d ] && mkdir /etc/salt/minion.d > /dev/null
-ADD ./master /etc/salt/minion.d/master.conf
+ADD ./master.conf /etc/salt/minion.d/master.conf
 
 # Do iptables stuff ...
 RUN chkconfig iptables off
