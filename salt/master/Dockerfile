@@ -53,6 +53,7 @@ EXPOSE 22
 # Build a file /etc/rc.local
 RUN echo "# THIS FILE WAS CREATED BY docker (http://docker.io)" > /etc/rc.local
 RUN echo "service salt-master start" >> /etc/rc.local
+RUN echo "sleep 30" >> /etc/rc.local
 RUN echo "service salt-minion start" >> /etc/rc.local
 RUN echo "/usr/sbin/sshd -D" >> /etc/rc.local
 
