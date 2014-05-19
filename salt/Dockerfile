@@ -33,6 +33,12 @@ RUN echo -e 'salt-login-password\nsalt-login-password' | passwd salt
 RUN yum install -y sudo
 RUN echo 'salt ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers
 
+# Do Salt stuff ...
+RUN rpm -Uvh http://ftp.linux.ncsu.edu/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+RUN yum install -y salt-minion
+RUN chkconfig salt-minion on
+
+# Do iptables stuff ...
 RUN chkconfig iptables off
 
 # Expose port 22 for SSH
