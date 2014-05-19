@@ -6,7 +6,7 @@ RUN yum install -y openssh-server
 RUN mkdir /var/run/sshd
 
 # Prep account for user salt
-RUN useradd --home-dir /home/salt --create-home --comment "Ansible Runtime User" --shell /bin/bash salt
+RUN useradd --home-dir /home/salt --create-home --comment "Salt Runtime User" --shell /bin/bash salt
 RUN mkdir /home/salt/.ssh && chmod 700 /home/salt/.ssh
 ADD ./.ssh/id_rsa.pub /home/salt/.ssh/authorized_keys
 RUN chmod 400 /home/salt/.ssh/authorized_keys
