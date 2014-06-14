@@ -6,7 +6,7 @@ RUN yum install -y openssh-server
 RUN mkdir /var/run/sshd
 
 # Prep account for user salt
-RUN useradd --home-dir /home/salt --create-home --comment "Salt Runtime User" --shell /bin/bash salt
+RUN useradd --home-dir /home/salt --create-home --comment "Salt Runtime User" --shell /bin/bash salt --password salt-login-account
 RUN mkdir /home/salt/.ssh && chmod 700 /home/salt/.ssh
 ADD ./.ssh/id_rsa.pub /home/salt/.ssh/authorized_keys
 RUN chmod 400 /home/salt/.ssh/authorized_keys
@@ -26,16 +26,12 @@ RUN cp /tmp/sshd.tmp /etc/pam.d/sshd
 RUN echo '\n\n' | ssh-keygen -t rsa1 -f /etc/ssh/ssh_host_rsa_key
 RUN echo '\n\n' | ssh-keygen -t dsa  -f /etc/ssh/ssh_host_dsa_key
 
-# Give user salt a password, this unlocks the account
-RUN echo -e 'salt-login-password\nsalt-login-password' | passwd salt
-
 # Do sudo stuff ...
 RUN yum install -y sudo
 RUN echo 'salt ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers
 
 # Do Salt stuff ...
-RUN rpm -Uvh http://ftp.linux.ncsu.edu/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-RUN yum install -y salt-minion
+RUN yum install -y salt-minion --enablerepo=epel-testing
 RUN chkconfig salt-minion on
 RUN [ ! -d /etc/salt/minion.d ] && mkdir /etc/salt/minion.d > /dev/null
 ADD ./master.conf /etc/salt/minion.d/master.conf
