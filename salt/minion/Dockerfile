@@ -31,6 +31,7 @@ RUN yum install -y sudo
 RUN echo 'salt ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers
 
 # Do Salt stuff ...
+RUN rpm -Uvh http://ftp.linux.ncsu.edu/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 RUN yum install -y salt-minion --enablerepo=epel-testing
 RUN chkconfig salt-minion on
 RUN [ ! -d /etc/salt/minion.d ] && mkdir /etc/salt/minion.d > /dev/null
